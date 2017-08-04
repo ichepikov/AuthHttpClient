@@ -10,15 +10,15 @@ namespace AuthHttpClient.Authentication.Implementation
         private readonly string _accessToken;
         private bool _isAlive = true;
 
-        public AuthBearerCredentials(string accessToken) : this(accessToken, TimeSpan.MaxValue)
+        public AuthBearerCredentials(string accessToken) : this(accessToken, DateTime.MaxValue)
         {
 
         }
 
-        public AuthBearerCredentials(string accessToken, TimeSpan liveTimeSpan)
+        public AuthBearerCredentials(string accessToken, DateTime liveTimeSpan)
         {
             _accessToken = accessToken;
-            _expiteDateTime = DateTime.Now.Add(liveTimeSpan);
+            _expiteDateTime = liveTimeSpan;
         }
 
         public void Patch(HttpClient client)

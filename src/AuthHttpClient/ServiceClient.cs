@@ -18,22 +18,21 @@ namespace AuthHttpClient
             _baseUrl = baseUrl;
         }
 
-        public async Task<RequestResponce<T>> Execute<T>(ApiRequest<T> request)
+        public async Task<RequestResponse<T>> Execute<T>(ServiceRequest<T> request)
         {
             try
             {
                 request.Authentication = await _authenticationProvider.GetCredentials();
                 request.BaseUrl = _baseUrl;
-                return new RequestResponce<T>(await request.Execute());
+                return new RequestResponse<T>(await request.Execute());
             }
             catch (UnauthorizedAccessException)
             {
-                request.Authentication.Kill();
                 return await Execute(request);
             }
             catch
             {
-                return new RequestResponce<T>(default(T), RequestErrorTypes.Unknown);
+                return new RequestResponse<T>(default(T), RequestResponseErrorTypes.Unknown);
             }
         }
     }

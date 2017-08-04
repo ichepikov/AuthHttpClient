@@ -4,12 +4,16 @@ using System.Threading.Tasks;
 
 namespace AuthHttpClient.Authentication
 {
-
-    //ToDo: think what to do with fatal error.
     public abstract class AuthProviderBase : IAuthenticationProvider
     {
         protected readonly SemaphoreSlim CredantialsRequestLock = new SemaphoreSlim(1);
         private IAuthenticationCredentials _currentAuthenticationCredentials;
+
+        protected AuthProviderBase(IAuthenticationCredentials initCredentials)
+        {
+            if (initCredentials?.IsAlive() == true)
+                _currentAuthenticationCredentials = initCredentials;
+        }
 
         public async Task<IAuthenticationCredentials> GetCredentials()
         {

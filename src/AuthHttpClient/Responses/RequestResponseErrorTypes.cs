@@ -1,6 +1,6 @@
 ﻿namespace AuthHttpClient.Responses
 {
-    public enum RequestErrorTypes
+    public enum RequestResponseErrorTypes
     {
         None,
         Connection,
